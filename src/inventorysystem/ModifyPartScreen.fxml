@@ -10,22 +10,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="inventorysystem.PartScreenController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="inventorysystem.ModifyPartScreenController">
    <children>
       <HBox layoutX="14.0" layoutY="14.0" prefHeight="79.0" prefWidth="570.0" spacing="20.0">
          <children>
-            <Label prefHeight="30.0" prefWidth="164.0" text="Add Part">
+            <Label prefHeight="30.0" prefWidth="164.0" text="Modify Part">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <RadioButton mnemonicParsing="false" text="In-House">
+            <RadioButton fx:id="inhouseRadioButton" mnemonicParsing="false" text="In-House">
                <font>
                   <Font size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton layoutX="165.0" layoutY="10.0" mnemonicParsing="false" text="Outsourced">
+            <RadioButton fx:id="outsourcedRadioButton" layoutX="165.0" layoutY="10.0" mnemonicParsing="false" text="Outsourced">
                <font>
                   <Font size="15.0" />
                </font>
@@ -41,7 +40,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partIdTextField" prefHeight="59.0" prefWidth="218.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -58,7 +57,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partNameTextField" prefHeight="59.0" prefWidth="218.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -75,7 +74,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partInvTextField" prefHeight="59.0" prefWidth="218.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -92,7 +91,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partPriceTextField" prefHeight="59.0" prefWidth="218.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -109,7 +108,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="33.0" prefWidth="142.0" text="Max">
+                  <TextField fx:id="partMaxTextField" prefHeight="33.0" prefWidth="142.0" text="Max">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>
@@ -119,7 +118,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="33.0" prefWidth="142.0" text="Min">
+                  <TextField fx:id="partMinTextField" prefHeight="33.0" prefWidth="142.0" text="Min">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -136,7 +135,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partCompanyNameTextField" prefHeight="59.0" prefWidth="218.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -150,8 +149,8 @@
       </VBox>
       <HBox alignment="BASELINE_RIGHT" layoutX="196.0" layoutY="520.0" prefHeight="66.0" prefWidth="318.0" spacing="30.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Save" />
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Cancel" />
+            <Button fx:id="SaveButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Save" />
+            <Button fx:id="CancelButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="Cancel" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
