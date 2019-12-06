@@ -8,6 +8,7 @@ package inventorysystem;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -104,6 +105,13 @@ public class MainScreenController implements Initializable {
         window.show();
     }
     
+    /**
+     * Closes application when exit button is pushed
+     * @param event - button press
+     */
+    public void exitButtonPushed(ActionEvent event) {
+        Platform.exit();
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
