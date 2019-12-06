@@ -82,6 +82,29 @@ public class MainScreenController implements Initializable {
         window.show();
     }
     
+    public void addProductButtonPushed(ActionEvent event) throws IOException {
+        Parent partPage = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
+        Scene partScene = new Scene(partPage);
+        
+        //this line gets the stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(partScene);
+        window.show();
+    }
+    
+    public void modifyProductButtonPushed(ActionEvent event) throws IOException {
+        Parent partPage = FXMLLoader.load(getClass().getResource("ModifyProductScreen.fxml"));
+        Scene partScene = new Scene(partPage);
+        
+        //this line gets the stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        
+        window.setScene(partScene);
+        window.show();
+    }
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
