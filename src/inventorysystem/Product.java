@@ -19,6 +19,7 @@ public class Product {
     int stock;
     int min;
     int max;
+    private static int nextProductId = 1;
 
     /**
      * Product constructor - creates a new Product
@@ -36,6 +37,10 @@ public class Product {
         this.stock = stock;
         this.min = min;
         this.max = max;
+    }
+    
+    private static int getNextProductId() {
+        return nextProductId++;
     }
 
     public int getId() {
@@ -87,17 +92,15 @@ public class Product {
     }
     
     public void addAssociatedPart(Part part) {
-        
+        associatedParts.add(part);
     }
     
     public void deleteAssociatedPart(Part part) {
-        
+        associatedParts.remove(part);
     }
     
     public ObservableList getAllAssociatedParts() {
         return associatedParts;
     }
-    
-    
-    
+  
 }
