@@ -12,8 +12,8 @@ import javafx.collections.ObservableList;
  * @author kelsey
  */
 public class Inventory {
-    private ObservableList allParts;
-    private ObservableList allProducts;
+    private static ObservableList<Part> allParts;
+    private static ObservableList<Product> allProducts;
     
     public void addPart(Part part) {
         
@@ -23,21 +23,48 @@ public class Inventory {
         
     }
     
-//    public Part lookupPart(int partID) {
-//        
-//    }
-//    
-//    public Product lookupProduct(int productID) {
-//        
-//    }
-//    
-//    public ObservableList lookupPart(String partName) {
-//        
-//    }
-//    
-//    public ObservableList lookupProduct(String productName) {
-//        
-//    }
+    /**
+     * Return a part object from given partId
+     * @param partId
+     * @return Part object that matches given partId
+     */
+    public Part lookupPart(int partId) {
+        for (Part p : allParts) {
+            if (p.getId() == partId) {
+                return p;
+            }
+        }
+        return null;
+    }
+    
+    public Product lookupProduct(int productId) {
+        for (Product p : allProducts) {
+            if (p.getId() == productId) {
+                return p;
+            }
+        }
+        return null;
+    }
+    
+    public ObservableList lookupPart(String partName) {
+        ObservableList<Part> matchingParts = null;
+        for (Part p : allParts) {
+            if (p.getName().equals(partName)) {
+                matchingParts.add(p);
+            }
+        }
+        return matchingParts;
+    }
+    
+    public ObservableList lookupProduct(String productName) {
+        ObservableList<Product> matchingProducts = null;
+        for (Product p : allProducts) {
+            if (p.getName().equals(productName)) {
+                matchingProducts.add(p);
+            }
+        }
+        return matchingProducts;
+    }
     
     public void updateProduct(int index, Product product) {
         
