@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package inventorysystem;
 
 import java.io.IOException;
@@ -25,10 +20,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 /**
- *
- * @author kelsey
+ * Controller class for Main Screen
+ * @author Kelsey Deffendol <kdeffen@wgu.edu>
  */
 public class MainScreenController implements Initializable {
+   
     //Parts TableView variables
     @FXML TableView<Part> partTableView;
     @FXML TableColumn<Part, Integer> partIdColumn;
@@ -121,6 +117,12 @@ public class MainScreenController implements Initializable {
         partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partName"));
         partInventoryColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("stock"));
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("partPrice"));
+
+        //initialize Product table
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("productId"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("productName"));
+        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("stock"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("productPrice"));
     }    
     
 }
