@@ -1,26 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package inventorysystem;
 
 import javafx.collections.ObservableList;
 
 /**
  * Inventory class : stores all Parts and Products objects
- * @author kelsey
+ * @author Kelsey Deffendol <kdeffen@wgu.edu>
  */
 public class Inventory {
+
     private static ObservableList<Part> allParts;
-    private static ObservableList<Product> allProducts;
-    
+    private static ObservableList<Product> allProducts; 
+
+    /**
+     * Adds part to the end of parts list
+     * @param part
+     */
     public void addPart(Part part) {
-        
+        allParts.add(part);
     }
     
+    /**
+     * Adds product to the end of products list
+     * @param product
+     */
     public void addProduct(Product product) {
-        
+        allProducts.add(product);
     }
     
     /**
@@ -37,6 +41,11 @@ public class Inventory {
         return null;
     }
     
+    /**
+     * Return a product object from given productId
+     * @param productId
+     * @return Product object that matches given productId
+     */
     public Product lookupProduct(int productId) {
         for (Product p : allProducts) {
             if (p.getId() == productId) {
@@ -46,6 +55,11 @@ public class Inventory {
         return null;
     }
     
+    /**
+     * Return list of parts with name that matches
+     * @param partName
+     * @return list of parts that match given partName
+     */
     public ObservableList lookupPart(String partName) {
         ObservableList<Part> matchingParts = null;
         for (Part p : allParts) {
@@ -56,6 +70,11 @@ public class Inventory {
         return matchingParts;
     }
     
+    /**
+     * Return list of products with name that matches
+     * @param productName
+     * @return list of products that match given productName
+     */
     public ObservableList lookupProduct(String productName) {
         ObservableList<Product> matchingProducts = null;
         for (Product p : allProducts) {
@@ -66,26 +85,52 @@ public class Inventory {
         return matchingProducts;
     }
     
+    /**
+     * updates Product information in given index position
+     * @param index - index of product that is updated
+     * @param product - new product information
+     */
     public void updateProduct(int index, Product product) {
-        
+        allProducts.set(index, product);
     }
     
+    /**
+     * updates Part information in given index position
+     * @param index - index of part that is updated
+     * @param part - new part information
+     */
     public void updatePart(int index, Part part) {
-        
+        allParts.set(index, part);
     }
     
+    /**
+     * removes part from allParts list
+     * @param part - part to be removed
+     */
     public void deletePart(Part part) {
-        
+        allParts.remove(part);
     }
     
+    /**
+     * removes product from allProducts list
+     * @param product - product to be removed
+     */
     public void deleteProduct(Product product) {
-        
+        allProducts.remove(product);
     }
     
+    /**
+     * returns all parts in inventory
+     * @return allParts
+     */
     public ObservableList getAllParts() {
         return allParts;
     }
     
+    /**
+     * returns all products in inventory
+     * @return allProducts
+     */
     public ObservableList getAllProducts() {
         return allProducts;
     }
