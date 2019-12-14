@@ -15,7 +15,7 @@ public class Inventory {
      * Adds part to the end of parts list
      * @param part
      */
-    public void addPart(Part part) {
+    public static void addPart(Part part) {
         allParts.add(part);
     }
     
@@ -23,7 +23,7 @@ public class Inventory {
      * Adds product to the end of products list
      * @param product
      */
-    public void addProduct(Product product) {
+    public static void addProduct(Product product) {
         allProducts.add(product);
     }
     
@@ -32,7 +32,7 @@ public class Inventory {
      * @param partId
      * @return Part object that matches given partId
      */
-    public Part lookupPart(int partId) {
+    public static Part lookupPart(int partId) {
         for (Part p : allParts) {
             if (p.getId() == partId) {
                 return p;
@@ -46,7 +46,7 @@ public class Inventory {
      * @param productId
      * @return Product object that matches given productId
      */
-    public Product lookupProduct(int productId) {
+    public static Product lookupProduct(int productId) {
         for (Product p : allProducts) {
             if (p.getId() == productId) {
                 return p;
@@ -60,7 +60,7 @@ public class Inventory {
      * @param partName
      * @return list of parts that match given partName
      */
-    public ObservableList lookupPart(String partName) {
+    public static ObservableList lookupPart(String partName) {
         ObservableList<Part> matchingParts = null;
         for (Part p : allParts) {
             if (p.getName().equals(partName)) {
@@ -75,7 +75,7 @@ public class Inventory {
      * @param productName
      * @return list of products that match given productName
      */
-    public ObservableList lookupProduct(String productName) {
+    public static ObservableList lookupProduct(String productName) {
         ObservableList<Product> matchingProducts = null;
         for (Product p : allProducts) {
             if (p.getName().equals(productName)) {
@@ -90,7 +90,7 @@ public class Inventory {
      * @param index - index of product that is updated
      * @param product - new product information
      */
-    public void updateProduct(int index, Product product) {
+    public static void updateProduct(int index, Product product) {
         allProducts.set(index, product);
     }
     
@@ -99,7 +99,7 @@ public class Inventory {
      * @param index - index of part that is updated
      * @param part - new part information
      */
-    public void updatePart(int index, Part part) {
+    public static void updatePart(int index, Part part) {
         allParts.set(index, part);
     }
     
@@ -107,7 +107,7 @@ public class Inventory {
      * removes part from allParts list
      * @param part - part to be removed
      */
-    public void deletePart(Part part) {
+    public static void deletePart(Part part) {
         allParts.remove(part);
     }
     
@@ -115,7 +115,7 @@ public class Inventory {
      * removes product from allProducts list
      * @param product - product to be removed
      */
-    public void deleteProduct(Product product) {
+    public static void deleteProduct(Product product) {
         allProducts.remove(product);
     }
     
@@ -123,7 +123,7 @@ public class Inventory {
      * returns all parts in inventory
      * @return allParts
      */
-    public ObservableList getAllParts() {
+    public static ObservableList getAllParts() {
         return allParts;
     }
     
@@ -131,7 +131,7 @@ public class Inventory {
      * returns all products in inventory
      * @return allProducts
      */
-    public ObservableList getAllProducts() {
+    public static ObservableList getAllProducts() {
         return allProducts;
     }
 }

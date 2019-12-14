@@ -1,5 +1,6 @@
 package inventorysystem;
 
+import static inventorysystem.Inventory.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,7 +12,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import static javafx.scene.control.ButtonType.OK;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -57,6 +61,12 @@ public class MainScreenController implements Initializable {
     @FXML Button ExitButton;
     
     
+    //PART TABLE FUNCTIONS ------
+    
+    public void updatePartTable() {
+        partTableView.setItems(getAllParts());
+    }
+    
     public void addPartButtonPushed(ActionEvent event) throws IOException {
         Parent partPage = FXMLLoader.load(getClass().getResource("AddPartScreen.fxml"));
         Scene partScene = new Scene(partPage);
@@ -77,6 +87,30 @@ public class MainScreenController implements Initializable {
         
         window.setScene(partScene);
         window.show();
+    }
+    
+    public void deletePartButtonPushed(ActionEvent event) throws IOException {
+        Part partToBeDeleted = partTableView.getSelectionModel().getSelectedItem();
+        
+        //confirmation box
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, 
+                "Are you sure you want to delete " + partToBeDeleted.getName() + "?", 
+                ButtonType.YES, 
+                ButtonType.CANCEL);
+        
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+           deletePart(partToBeDeleted);
+           updatePartTable();
+        }
+        
+    }
+    
+    
+    //PRODUCT TABLE FUNCTIONS ------
+    
+    public void updateProductTable() {
+        productTableView.setItems(getAllProducts());
     }
     
     public void addProductButtonPushed(ActionEvent event) throws IOException {
@@ -101,12 +135,41 @@ public class MainScreenController implements Initializable {
         window.show();
     }
     
+    public void deleteProductButtonPushed(ActionEvent event) throws IOException {
+        Product productToBeDeleted = productTableView.getSelectionModel().getSelectedItem();
+        
+        //confirmation box
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, 
+                "Are you sure you want to delete " + productToBeDeleted.getName() + "?", 
+                ButtonType.YES, 
+                ButtonType.CANCEL);
+        
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+           deleteProduct(productToBeDeleted);
+           updateProductTable();
+        }
+        
+    }
+    
+    //OTHER FUNCTIONS ------
+    
     /**
      * Closes application when exit button is pushed
      * @param event - button press
      */
     public void exitButtonPushed(ActionEvent event) {
-        Platform.exit();
+        
+        //confirmation box
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, 
+                "Are you sure you want to exit the program? (Changes will not be saved)", 
+                ButtonType.OK, 
+                ButtonType.CANCEL);
+        
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK) {
+           Platform.exit(); 
+        }  
     }
     
     @Override
@@ -119,10 +182,10 @@ public class MainScreenController implements Initializable {
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("partPrice"));
 
         //initialize Product table
-        productIdColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("productId"));
-        productNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("productName"));
-        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("stock"));
-        productPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("productPrice"));
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productId"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
+        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("stock"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("productPrice"));
     }    
     
 }
