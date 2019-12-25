@@ -5,9 +5,12 @@
  */
 package inventorysystem;
 
+import static inventorysystem.Inventory.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -65,18 +70,119 @@ public class ModifyProductScreenController implements Initializable {
     @FXML private Button cancelButton;
     
     
+    public void updateAvailablePartsTable() {
+        availablePartsTable.setItems(getAllParts());
+    }
+    
+    public void addButtonPressed(ActionEvent event) throws IOException {
+        Part partToBeAdded = (Part) availablePartsTable.getSelectionModel().getSelectedItem();
+        
+        addedPartsTable.getItems().add(partToBeAdded);
+    }
+    
+    public void deleteButtonPressed(ActionEvent event) throws IOException {
+        Part partToBeDeleted = (Part) addedPartsTable.getSelectionModel().getSelectedItem();
+        
+        addedPartsTable.getItems().remove(partToBeDeleted);
+    }
+    
+    public void searchPartsButtonPushed(ActionEvent event) throws IOException {
+        String searchField = searchInvTextField.getText();
+        ObservableList<Part> partSearch = FXCollections.observableArrayList();
+        
+        try {
+           
+           partSearch.add((lookupPart(Integer.parseInt(searchField))));
+           availablePartsTable.setItems(partSearch);
+           
+        } catch (NumberFormatException e) {
+            
+            availablePartsTable.setItems(lookupPart(searchField));
+        }   
+    }
+    
     /**
      * Changes screen to MainScreen without saving changes 
      */
     public void CancelButtonPushed(ActionEvent event) throws IOException {
-        Parent partPage = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-        Scene partScene = new Scene(partPage);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, 
+                "Are you sure you want to cancel modifying selected product?", 
+                ButtonType.YES, 
+                ButtonType.CANCEL);
         
-        //this line gets the stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            Parent partPage = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+            Scene partScene = new Scene(partPage);
         
-        window.setScene(partScene);
-        window.show();
+            //this line gets the stage information
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            window.setScene(partScene);
+            window.show();
+        }
+    }
+    
+    public void saveButtonPushed(ActionEvent event) throws IOException {
+        if (validateProduct() == true) {
+            //get values from each TextField to create new part and add to the inventory
+            modifyProduct();
+
+
+            //Changes screen ---------
+
+            Parent partPage = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+            Scene partScene = new Scene(partPage);
+
+            //this line gets the stage information
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            window.setScene(partScene);
+            window.show();
+        
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, 
+                "Inventory is greater than maximum inventory allowed.");
+        
+            alert.showAndWait();
+        }
+
+    }
+    
+    public boolean validateProduct() {
+        boolean isLess = true;
+        //check if inventory is greater than max inventory
+        if (Integer.parseInt(invTextField.getText()) > Integer.parseInt(maxTextField.getText())) {
+            isLess = false;
+        }
+        
+        return isLess;
+    }
+    
+    public void setPartInfo(Product productToModify) {
+        
+        idTextField.setText(Integer.toString(productToModify.getId()));
+        nameTextField.setText(productToModify.getName());
+        invTextField.setText(Integer.toString(productToModify.getStock()));
+        priceTextField.setText(Double.toString(productToModify.getPrice()));
+        minTextField.setText(Integer.toString(productToModify.getMin()));
+        maxTextField.setText(Integer.toString(productToModify.getMax()));
+        
+        //fill associated parts table
+        addedPartsTable.setItems(productToModify.getAllAssociatedParts());
+    }
+    
+    public void modifyProduct() {
+        
+    //make part with same partId as old part
+            Product newProduct =  new Product(Integer.parseInt(idTextField.getText()), 
+                    nameTextField.getText(), 
+                    Double.parseDouble(priceTextField.getText()), 
+                    Integer.parseInt(invTextField.getText()), 
+                    Integer.parseInt(maxTextField.getText()), 
+                    Integer.parseInt(minTextField.getText()));
+            
+            updateProduct(Integer.parseInt(idTextField.getText()) - 1, newProduct);   
     }
 
     /**
@@ -85,12 +191,20 @@ public class ModifyProductScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+//initialize Available Parts table
+        partIdColumnAvailable.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameColumnAvailable.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInvLevelColumnAvailable.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceColumnAvailable.setCellValueFactory(new PropertyValueFactory<>("price"));
         
-        partIdColumnAvailable.setCellValueFactory(new PropertyValueFactory<Part, Integer>("partIdAv"));
-        partNameColumnAvailable.setCellValueFactory(new PropertyValueFactory<Part, String>("partNameAv"));
-        partInvLevelColumnAvailable.setCellValueFactory(new PropertyValueFactory<Part, Integer>("invLevelAv"));
-        partPriceColumnAvailable.setCellValueFactory(new PropertyValueFactory<Part, Double>("partPriceAv"));
+        //initialize Added Parts table
+        partIdColumnAdded.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameColumnAdded.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInvLevelColumnAdded.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceColumnAdded.setCellValueFactory(new PropertyValueFactory<>("price"));
         
+        updateAvailablePartsTable();
+        addedPartsTable.getItems();
     }    
     
 }

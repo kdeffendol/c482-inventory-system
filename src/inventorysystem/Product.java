@@ -1,5 +1,6 @@
 package inventorysystem;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -7,7 +8,7 @@ import javafx.collections.ObservableList;
  * @author Kelsey Deffendol <kdeffen@wgu.edu>
  */
 public class Product {
-    private ObservableList associatedParts;
+    private ObservableList associatedParts = FXCollections.observableArrayList();
     int id;
     String name;
     double price;
@@ -34,7 +35,7 @@ public class Product {
         this.max = max;
     }
     
-    private static int getNextProductId() {
+    public static int getNextProductId() {
         return nextProductId++;
     }
 

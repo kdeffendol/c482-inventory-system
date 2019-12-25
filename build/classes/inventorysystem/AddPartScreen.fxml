@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -19,12 +20,12 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <RadioButton fx:id="inhouseRadioButton" mnemonicParsing="false" text="In-House">
+            <RadioButton fx:id="inhouseRadioButton" mnemonicParsing="false" onAction="#inhouseButtonPressed" text="In-House">
                <font>
                   <Font size="15.0" />
                </font>
             </RadioButton>
-            <RadioButton fx:id="outsourcedRadioButton" layoutX="165.0" layoutY="10.0" mnemonicParsing="false" text="Outsourced">
+            <RadioButton fx:id="outsourcedRadioButton" layoutX="165.0" layoutY="10.0" mnemonicParsing="false" onAction="#outsourcedButtonPressed" text="Outsourced">
                <font>
                   <Font size="15.0" />
                </font>
@@ -40,7 +41,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="partIdTextField" prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partIdTextField" disable="true" prefHeight="59.0" prefWidth="218.0" promptText="Auto gen - Disabled">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -57,7 +58,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="partNameTextField" prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partNameTextField" prefHeight="59.0" prefWidth="218.0" promptText="Part Name">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -74,7 +75,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="partInvTextField" prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partInvTextField" prefHeight="59.0" prefWidth="218.0" promptText="Inv">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -91,7 +92,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="partPriceTextField" prefHeight="59.0" prefWidth="218.0">
+                  <TextField fx:id="partPriceTextField" prefHeight="59.0" prefWidth="218.0" promptText="Price/Cost">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -108,7 +109,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="partMaxTextField" prefHeight="33.0" prefWidth="142.0" text="Max">
+                  <TextField fx:id="partMaxTextField" prefHeight="33.0" prefWidth="142.0" promptText="Max">
                      <font>
                         <Font name="System Italic" size="15.0" />
                      </font>
@@ -118,7 +119,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="partMinTextField" prefHeight="33.0" prefWidth="142.0" text="Min">
+                  <TextField fx:id="partMinTextField" prefHeight="33.0" prefWidth="142.0" promptText="Max">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -128,23 +129,44 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </HBox>
-            <HBox alignment="BASELINE_RIGHT" prefHeight="53.0" prefWidth="429.0" spacing="50.0">
+            <StackPane prefWidth="200.0">
                <children>
-                  <Label prefHeight="19.0" prefWidth="137.0" text="Company Name">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="partCompanyNameTextField" prefHeight="59.0" prefWidth="218.0">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </TextField>
+                  <HBox fx:id="companyNameHBox" alignment="BASELINE_RIGHT" prefHeight="53.0" prefWidth="429.0" spacing="50.0" visible="false">
+                     <children>
+                        <Label prefHeight="19.0" prefWidth="137.0" text="Company Name">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="partCompanyNameTextField" prefHeight="33.0" prefWidth="218.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
+                  <HBox fx:id="machineIdHBox" alignment="BASELINE_RIGHT" prefHeight="101.0" prefWidth="429.0" spacing="50.0" visible="false">
+                     <children>
+                        <Label prefHeight="19.0" prefWidth="137.0" text="Machine Id">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="partMachineIdTextField" prefHeight="33.0" prefWidth="218.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </HBox>
                </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </HBox>
+            </StackPane>
          </children>
       </VBox>
       <HBox alignment="BASELINE_RIGHT" layoutX="196.0" layoutY="520.0" prefHeight="66.0" prefWidth="318.0" spacing="30.0">

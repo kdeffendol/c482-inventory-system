@@ -1,5 +1,6 @@
 package inventorysystem;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -8,8 +9,8 @@ import javafx.collections.ObservableList;
  */
 public class Inventory {
 
-    private static ObservableList<Part> allParts;
-    private static ObservableList<Product> allProducts; 
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();;
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();;
 
     /**
      * Adds part to the end of parts list
@@ -61,7 +62,7 @@ public class Inventory {
      * @return list of parts that match given partName
      */
     public static ObservableList lookupPart(String partName) {
-        ObservableList<Part> matchingParts = null;
+        ObservableList<Part> matchingParts = FXCollections.observableArrayList();;
         for (Part p : allParts) {
             if (p.getName().equals(partName)) {
                 matchingParts.add(p);
@@ -76,7 +77,7 @@ public class Inventory {
      * @return list of products that match given productName
      */
     public static ObservableList lookupProduct(String productName) {
-        ObservableList<Product> matchingProducts = null;
+        ObservableList<Product> matchingProducts = FXCollections.observableArrayList();;
         for (Product p : allProducts) {
             if (p.getName().equals(productName)) {
                 matchingProducts.add(p);

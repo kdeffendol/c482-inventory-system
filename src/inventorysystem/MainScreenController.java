@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,6 +69,7 @@ public class MainScreenController implements Initializable {
         partTableView.setItems(getAllParts());
     }
     
+    
     public void addPartButtonPushed(ActionEvent event) throws IOException {
         Parent partPage = FXMLLoader.load(getClass().getResource("AddPartScreen.fxml"));
         Scene partScene = new Scene(partPage);
@@ -79,8 +82,13 @@ public class MainScreenController implements Initializable {
     }
     
     public void modifyPartButtonPushed(ActionEvent event) throws IOException {
-        Parent partPage = FXMLLoader.load(getClass().getResource("ModifyPartScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyPartScreen.fxml"));
+        Parent partPage = loader.load();
+        
         Scene partScene = new Scene(partPage);
+        
+        ModifyPartScreenController modifyPartScreenController = loader.getController();
+        modifyPartScreenController.setPartInfo(partTableView.getSelectionModel().getSelectedItem());
         
         //this line gets the stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -106,6 +114,36 @@ public class MainScreenController implements Initializable {
         
     }
     
+    public void searchPartsButtonPushed(ActionEvent event) throws IOException {
+        String searchField = partSearchTextField.getText();
+        ObservableList<Part> partSearch = FXCollections.observableArrayList();
+        
+        try {
+           
+           partSearch.add((lookupPart(Integer.parseInt(searchField))));
+           partTableView.setItems(partSearch);
+           
+        } catch (NumberFormatException e) {
+            
+            partTableView.setItems(lookupPart(searchField));
+        }   
+    }
+    
+    public void searchProductsButtonPushed(ActionEvent event) throws IOException {
+        String searchField = productSearchTextField.getText();
+        ObservableList<Product> productSearch = FXCollections.observableArrayList();
+        
+        try {
+           
+           productSearch.add((lookupProduct(Integer.parseInt(searchField))));
+           productTableView.setItems(productSearch);
+           
+        } catch (NumberFormatException e) {
+            
+            productTableView.setItems(lookupPart(searchField));
+        } 
+    }
+    
     
     //PRODUCT TABLE FUNCTIONS ------
     
@@ -114,24 +152,30 @@ public class MainScreenController implements Initializable {
     }
     
     public void addProductButtonPushed(ActionEvent event) throws IOException {
-        Parent partPage = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
-        Scene partScene = new Scene(partPage);
+        Parent productPage = FXMLLoader.load(getClass().getResource("AddProductScreen.fxml"));
+        Scene productScene = new Scene(productPage);
         
         //this line gets the stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         
-        window.setScene(partScene);
+        window.setScene(productScene);
         window.show();
     }
     
     public void modifyProductButtonPushed(ActionEvent event) throws IOException {
-        Parent partPage = FXMLLoader.load(getClass().getResource("ModifyProductScreen.fxml"));
-        Scene partScene = new Scene(partPage);
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyProductScreen.fxml"));
+        Parent productPage = loader.load();
+        
+        Scene productScene = new Scene(productPage);
+        
+        ModifyProductScreenController modifyProductScreenController = loader.getController();
+        modifyProductScreenController.setPartInfo(productTableView.getSelectionModel().getSelectedItem());
         
         //this line gets the stage information
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         
-        window.setScene(partScene);
+        window.setScene(productScene);
         window.show();
     }
     
@@ -172,20 +216,30 @@ public class MainScreenController implements Initializable {
         }  
     }
     
+    public void refreshTables() {
+        updatePartTable();
+        updateProductTable();
+    }
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         //initialize Part table
-        partIdColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("partId"));
-        partNameColumn.setCellValueFactory(new PropertyValueFactory<Part, String>("partName"));
-        partInventoryColumn.setCellValueFactory(new PropertyValueFactory<Part, Integer>("stock"));
-        partPriceColumn.setCellValueFactory(new PropertyValueFactory<Part, Double>("partPrice"));
+        partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        partInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         //initialize Product table
-        productIdColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productId"));
-        productNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
         productInventoryColumn.setCellValueFactory(new PropertyValueFactory<Product, Integer>("stock"));
-        productPriceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("productPrice"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<Product, Double>("price"));
+        
+        refreshTables();
+        
     }    
     
 }
