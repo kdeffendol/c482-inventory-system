@@ -118,37 +118,50 @@ public class MainScreenController implements Initializable {
         String searchField = partSearchTextField.getText();
         ObservableList<Part> partSearch = FXCollections.observableArrayList();
         
-        try {
-           
-           partSearch.add((lookupPart(Integer.parseInt(searchField))));
-           partTableView.setItems(partSearch);
-           
-        } catch (NumberFormatException e) {
-            
-            partTableView.setItems(lookupPart(searchField));
-        }   
+        if (searchField.equals("")) {
+            updatePartTable();
+        }
+        
+        else {
+            try {
+                partSearch.add((lookupPart(Integer.parseInt(searchField))));
+                partTableView.setItems(partSearch);
+
+            } catch (NumberFormatException e) {
+                partTableView.setItems(lookupPart(searchField));
+            }  
+        }
+        
+         
     }
     
-    public void searchProductsButtonPushed(ActionEvent event) throws IOException {
-        String searchField = productSearchTextField.getText();
-        ObservableList<Product> productSearch = FXCollections.observableArrayList();
-        
-        try {
-           
-           productSearch.add((lookupProduct(Integer.parseInt(searchField))));
-           productTableView.setItems(productSearch);
-           
-        } catch (NumberFormatException e) {
-            
-            productTableView.setItems(lookupPart(searchField));
-        } 
-    }
+    
     
     
     //PRODUCT TABLE FUNCTIONS ------
     
     public void updateProductTable() {
         productTableView.setItems(getAllProducts());
+    }
+    
+    public void searchProductsButtonPushed(ActionEvent event) throws IOException {
+        String searchField = productSearchTextField.getText();
+        ObservableList<Product> productSearch = FXCollections.observableArrayList();
+        
+        if (searchField.equals("")) {
+            updateProductTable();
+        }
+        else {
+            try {
+                productSearch.add((lookupProduct(Integer.parseInt(searchField))));
+                productTableView.setItems(productSearch);
+
+            } catch (NumberFormatException e) {
+                productTableView.setItems(lookupProduct(searchField));
+            } 
+        }
+        
+        
     }
     
     public void addProductButtonPushed(ActionEvent event) throws IOException {

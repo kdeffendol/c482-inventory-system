@@ -126,8 +126,8 @@ public class AddPartScreenController implements Initializable {
                     partNameTextField.getText(), 
                     Double.parseDouble(partPriceTextField.getText()), 
                     Integer.parseInt(partInvTextField.getText()), 
-                    Integer.parseInt(partMaxTextField.getText()), 
                     Integer.parseInt(partMinTextField.getText()), 
+                    Integer.parseInt(partMaxTextField.getText()), 
                     Integer.parseInt(partMachineIdTextField.getText()));
             
             addPart(newPart);
@@ -137,8 +137,8 @@ public class AddPartScreenController implements Initializable {
                     partNameTextField.getText(), 
                     Double.parseDouble(partPriceTextField.getText()), 
                     Integer.parseInt(partInvTextField.getText()), 
-                    Integer.parseInt(partMaxTextField.getText()), 
                     Integer.parseInt(partMinTextField.getText()), 
+                    Integer.parseInt(partMaxTextField.getText()), 
                     partCompanyNameTextField.getText());
             
             addPart(newPart);

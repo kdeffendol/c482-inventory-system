@@ -82,23 +82,34 @@ public class ModifyProductScreenController implements Initializable {
     
     public void deleteButtonPressed(ActionEvent event) throws IOException {
         Part partToBeDeleted = (Part) addedPartsTable.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, 
+                "Are you sure you want to remove the associated part from the product?", 
+                ButtonType.YES, 
+                ButtonType.CANCEL);
         
-        addedPartsTable.getItems().remove(partToBeDeleted);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            addedPartsTable.getItems().remove(partToBeDeleted);
+        }
     }
     
     public void searchPartsButtonPushed(ActionEvent event) throws IOException {
         String searchField = searchInvTextField.getText();
         ObservableList<Part> partSearch = FXCollections.observableArrayList();
         
-        try {
-           
-           partSearch.add((lookupPart(Integer.parseInt(searchField))));
-           availablePartsTable.setItems(partSearch);
-           
-        } catch (NumberFormatException e) {
-            
-            availablePartsTable.setItems(lookupPart(searchField));
-        }   
+        if (searchField.equals("")) {
+            updateAvailablePartsTable(); //empty search will return all available parts
+        }
+        else {
+            try {         
+                partSearch.add((lookupPart(Integer.parseInt(searchField))));
+                availablePartsTable.setItems(partSearch);
+            } catch (NumberFormatException e) {
+                availablePartsTable.setItems(lookupPart(searchField));
+            }   
+        }
+        
+
     }
     
     /**
@@ -179,8 +190,8 @@ public class ModifyProductScreenController implements Initializable {
                     nameTextField.getText(), 
                     Double.parseDouble(priceTextField.getText()), 
                     Integer.parseInt(invTextField.getText()), 
-                    Integer.parseInt(maxTextField.getText()), 
-                    Integer.parseInt(minTextField.getText()));
+                    Integer.parseInt(minTextField.getText()), 
+                    Integer.parseInt(maxTextField.getText()));
             
             updateProduct(Integer.parseInt(idTextField.getText()) - 1, newProduct);   
     }

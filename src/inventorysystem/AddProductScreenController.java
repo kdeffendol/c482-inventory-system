@@ -84,23 +84,34 @@ public class AddProductScreenController implements Initializable {
     
     public void deleteButtonPressed(ActionEvent event) throws IOException {
         Part partToBeDeleted = addedPartsTable.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, 
+                "Are you sure you want to remove the associated part from the product?", 
+                ButtonType.YES, 
+                ButtonType.CANCEL);
         
-        addedPartsTable.getItems().remove(partToBeDeleted);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            addedPartsTable.getItems().remove(partToBeDeleted);
+        }
     }
     
     public void searchPartsButtonPushed(ActionEvent event) throws IOException {
         String searchField = searchInvTextField.getText();
         ObservableList<Part> partSearch = FXCollections.observableArrayList();
         
-        try {
-           
-           partSearch.add((lookupPart(Integer.parseInt(searchField))));
-           availablePartsTable.setItems(partSearch);
-           
-        } catch (NumberFormatException e) {
-            
-            availablePartsTable.setItems(lookupPart(searchField));
-        }   
+        if (searchField.equals("")) {
+           updateAvailablePartsTable();
+        }
+        else {
+            try {         
+               partSearch.add((lookupPart(Integer.parseInt(searchField))));
+               availablePartsTable.setItems(partSearch);
+
+            } catch (NumberFormatException e) {
+                availablePartsTable.setItems(lookupPart(searchField));
+            } 
+        }
+          
     }
     
     /**

@@ -119,7 +119,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="partMinTextField" prefHeight="33.0" prefWidth="142.0" promptText="Max">
+                  <TextField fx:id="partMinTextField" prefHeight="33.0" prefWidth="142.0" promptText="Min">
                      <font>
                         <Font size="15.0" />
                      </font>
